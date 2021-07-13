@@ -1,5 +1,5 @@
-RUN g
+FROM tiangolo/uwsgi-nginx-flask:python3.8
+
+COPY ./pakt_blog /app
 
 RUN pip install -r requirements.txt
-
-CMD python3 -Bm pakt_blog
