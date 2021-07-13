@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for post in posts %}
+        <hr>
+        <div id="{{post.id}}">
+            <h3>{{post.name}}</h3>
+            <a href="/post/{{post.id}}">Go to post</a>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}
