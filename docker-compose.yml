@@ -1,25 +1,12 @@
-version: "3.3"
-
+version: "3"
 services:
-
-  traefik:
-    image: "traefik:v2.4"
-    container_name: "traefik"
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-  whoami:
-    image: "traefik/whoami"
-    container_name: "pakt-blog"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`blog.pakt.dev`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
+    blog:
+        build: .
+        restart: unless-stopped
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.pakt-blog.rule=Host(`blog.pakt.dev`)"
+            - "traefik.http.services.pakt-blog.loadbalancer.server.port=5000"
+            - "traefik.http.routers.pakt-blog.service=pakt-blog"
+            - "traefik.http.routers.pakt-blog.tls=true"
+            - "traefik.http.routers.pakt-blog.tls.certresolver=lets-encrypt"
