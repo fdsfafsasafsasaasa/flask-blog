@@ -10,6 +10,15 @@
             <label>Username</label>
             <br>
             <input type="text" name="username">
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="color: red;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
         </p>
         <p>
             <label>Password</label>

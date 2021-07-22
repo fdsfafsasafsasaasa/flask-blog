@@ -1,3 +1,4 @@
+from os import name
 from flask_login.utils import login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import render_template, request, flash
@@ -50,10 +51,11 @@ def register():
         username, password = request.form.get('username'), request.form.get('password')
 
         if User.query.filter_by(name=username).first():
-            flash()
+            flash("Username already taken.")
 
+        user = User(name=username, password=generate_password_hash(password))
 
-        user = db.session.add(name=username, password=generate_password_hash(password))
+        db.session.add(user)
     
         db.session.commit()
 
@@ -68,8 +70,8 @@ def create():
 
     if request.method == "POST":
 
-        if Post.query.filter_by().first()
-
+        if Post.query.filter_by(name=name):
+            flash("Title already taken.")
 
         db.session.add(
             Post(
