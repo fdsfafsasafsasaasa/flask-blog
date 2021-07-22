@@ -1,6 +1,6 @@
 from flask_login.utils import login_required
-from werkzeug.security import check_password_hash
-from flask import render_template, request
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask import render_template, request, flash
 from werkzeug.utils import redirect
 
 from pakt_blog.models import db, User, Post
@@ -31,7 +31,7 @@ def login():
 
         user = User.query.filter_by(name=username).first()
 
-        if not user:
+        if not user:  
             return redirect("/")
 
         if check_password_hash(user.password, password):
@@ -40,13 +40,37 @@ def login():
         
         return redirect("/")
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
+
+    elif request.method == "POST":
+
+        username, password = request.form.get('username'), request.form.get('password')
+
+        if User.query.filter_by(name=username).first():
+            flash()
+
+
+        user = db.session.add(name=username, password=generate_password_hash(password))
+    
+        db.session.commit()
+
+        login_user(user)
+        
+        return redirect("/")
+
 @app.route("/create", methods=["GET", "POST"])
-@login_required
 def create():
     if request.method == "GET":
-        return render_template("create.html")
+        return render_template("create.html")   
 
     if request.method == "POST":
+
+        if Post.query.filter_by().first()
+
+
         db.session.add(
             Post(
                 name = request.form.get("title"),
