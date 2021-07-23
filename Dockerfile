@@ -1,5 +1,5 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.8
 
-COPY ./pakt_blog /app
+COPY ./src /app
 
 RUN pip install -r /app/requirements.txt
