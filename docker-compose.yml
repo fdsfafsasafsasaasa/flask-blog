@@ -1,12 +1,22 @@
 version: "3"
 services:
     blog:
-        build: .
+        build: ./
         restart: unless-stopped
+        networks:
+            - web
+            - default
+
+        environment:
+                - FLASK_APP=app/main.py
+                - FLASK_DEBUG=1
+                - 'RUN=flask run --host=0.0.0.0 --port=80'
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.pakt-blog.rule=Host(`blog.pakt.dev`)"
-            - "traefik.http.services.pakt-blog.loadbalancer.server.port=5000"
-            - "traefik.http.routers.pakt-blog.service=pakt-blog"
             - "traefik.http.routers.pakt-blog.tls=true"
             - "traefik.http.routers.pakt-blog.tls.certresolver=lets-encrypt"
+
+networks:
+    web:
+        external: true
