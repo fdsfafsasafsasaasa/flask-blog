@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for post in posts %}
-        <hr>
-        <div id="{{post.id}}">
-            <h3>{{post.name}} by {{post.author}}</h3>
-            <a href="/post/{{post.id}}">Go to post</a>
-        </div>
-        <br>
-    {% endfor %}
+    {% if posts %}
+        {% for post in posts %}
+            <hr>
+            <div id="{{post.id}}">
+                <h3>{{post.name}} by {{post.author}}</h3>
+                <a href="/post/{{post.id}}">Go to post</a>
+            </div>
+            <br>
+        {% endfor %}
+    {% else %}
+            <p>It seems nobody has posted anything. Let's change that.</p>
+    {% endif %}
 {% endblock %}
