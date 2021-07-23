@@ -1,6 +1,7 @@
-import pakt_blog
+from flask_sqlalchemy import _DebugQueryTuple
+from pakt_blog import app, db
 
 if __name__ == "__main__":
-    pakt_blog.db.create_all()
+    db.create_all()
 
-    pakt_blog.app.run()
+    app.run()
