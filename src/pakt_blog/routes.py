@@ -13,7 +13,7 @@ from flask_login import login_user
 @app.route("/")
 def home():
 
-    return render_template("index.html", posts=db.session.query(Post).all())
+    return render_template("index.html", posts=db.session.query(Post).all().reverse())
 
 @app.route("/post/<id>/")
 def get_post(id):
@@ -22,7 +22,6 @@ def get_post(id):
         if post.id == int(id):
 
             return render_template("post.html", post=post)
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

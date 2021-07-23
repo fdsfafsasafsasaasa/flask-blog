@@ -5,8 +5,6 @@ from sqlalchemy.types import Integer, String
 
 from flask_login import UserMixin
 
-from werkzeug.security import generate_password_hash
-
 @login_manager.user_loader
 def user_loader(user_id):
     return User.query.get(user_id)
