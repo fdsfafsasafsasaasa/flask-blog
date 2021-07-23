@@ -79,9 +79,8 @@ def create():
     if request.method == "POST":
 
         if Post.query.filter_by(name=request.form.get("title")):
-            flash("Title already taken.")
+            flash("Post title already taken.")
             redirect("/create")
-
 
         db.session.add(
             Post(
