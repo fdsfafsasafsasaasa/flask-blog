@@ -12,15 +12,12 @@ from flask_login import login_user
 
 @app.route("/")
 def home():
-
     return render_template("index.html", posts=db.session.query(Post).all().reverse())
 
 @app.route("/post/<id>/")
 def get_post(id):
-
     for post in db.session.query(Post).all():
         if post.id == int(id):
-
             return render_template("post.html", post=post)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -81,7 +78,7 @@ def create():
 
         if Post.query.filter_by(name=request.form.get("title")):
             flash("Post title already taken.")
-            redirect("/create")
+            return redirect("/create")
 
         db.session.add(
             Post(
