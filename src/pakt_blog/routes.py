@@ -80,17 +80,21 @@ def create():
             flash("Post title already taken.")
             return redirect("/create")
 
-        db.session.add(
-            Post(
+        post = Post(
                 name = request.form.get("title"),
                 body = request.form.get("body"),
                 author = flask_login.current_user.name
             )
+
+        db.session.add(
+           post
         )
 
         db.session.commit()
 
-        return redirect("/")
+        post = Post.query.filter_by(name=post.name)
+
+        return redirect(f"/post/{post.id}")
 
 @login_manager.unauthorized_handler
 def unauthorized():
