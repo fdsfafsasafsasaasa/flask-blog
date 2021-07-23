@@ -1,3 +1,4 @@
+import flask_login
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import render_template, request, flash
 from flask_login.utils import login_required
@@ -19,6 +20,7 @@ def get_post(id):
 
     for post in db.session.query(Post).all():
         if post.id == int(id):
+
             return render_template("post.html", post=post)
 
 
@@ -85,7 +87,8 @@ def create():
         db.session.add(
             Post(
                 name = request.form.get("title"),
-                body = request.form.get("body")
+                body = request.form.get("body"),
+                author = flask_login.current_user.name
             )
         )
 
